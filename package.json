@@ -1,0 +1,21 @@
+{
+  "name": "p5",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "max pleaner <max.pleaner@hover.to>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack serve --open"
+  },
+  "devDependencies": {
+    "coffee-loader": "^4.0.0",
+    "coffeescript": "^2.7.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "p5": "^1.8.0"
+  }
+}
