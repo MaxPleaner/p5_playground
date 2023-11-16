@@ -1,10 +1,8 @@
-p5 = require 'p5'
+window.p5 = require 'p5'
+window.P5Wrapper = require './util/p5_wrapper'
 
-new p5 (p) ->
-  p.setup = ->
-    p.createCanvas 400, 400
-    p.background 200
+Projects = require './projects'
 
-  p.draw = ->
-    p.fill 255, 0, 0
-    p.ellipse p.mouseX, p.mouseY, 50, 50
+first = new Projects.First().start()
+
+# second = Projects.Second()
