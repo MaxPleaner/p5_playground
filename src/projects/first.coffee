@@ -1,4 +1,12 @@
-module.exports = class First extends P5Wrapper
-  draw: =>
-    @p5.fill 0, 0, 255
-    @p5.ellipse @p5.mouseX, @p5.mouseY, 50, 50
+module.exports = ->
+  First = this
+
+  @draw = ->
+    @fill 255
+    @ellipse @mouseX, @mouseY, 50, 50
+
+    Utils.update_each_pixel.call this, ([r,g,b,a]) ->
+      [r * 0.1, g, b, a]
+
+  this
+.apply {}
