@@ -1,3 +1,4 @@
 module.exports = (Utils) ->
   Mandelbrot: require('./shaders/mandelbrot')(Utils)
-  PostprocessTest: require('./shaders/postprocess_test')(Utils)
+  PostProcessSinWave: require('./shaders/postprocess_sin_wave')(Utils)
+  PostProcessTemplate: require('./shaders/postprocess_template')(Utils)

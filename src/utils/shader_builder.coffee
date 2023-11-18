@@ -1,4 +1,4 @@
-default_vs = """
+default_vert = """
   precision highp float; varying vec2 vPos;
   attribute vec3 aPosition;
   attribute vec2 aTexCoord;
@@ -12,7 +12,15 @@ default_vs = """
   }
 """
 
-module.exports = ({vs = default_vs, fs, setup, draw}) ->
+default_frag_frontmatter = """
+      precision highp float; varying vec2 vPos;
+      varying vec2 vTexCoord;
+      uniform float iTime;
+"""
+
+module.exports = ({vert = default_vert, postprocess, frag, setup, draw}) ->
+  frag = default_frag_frontmatter + frag
+
   ->
     Shader = this
 
@@ -25,10 +33,9 @@ module.exports = ({vs = default_vs, fs, setup, draw}) ->
         return gl.getShaderInfoLog(glFragShader)
       return null
 
-
     @setup = (extra_args = []) ->
-      Shader.shader = @createShader(vs, fs)
-      shaderError = Shader.checkShaderError(Shader.shader, fs)
+      Shader.shader = @createShader(vert, frag)
+      shaderError = Shader.checkShaderError(Shader.shader, frag)
       if shaderError
         throw shaderError
       else
@@ -36,7 +43,10 @@ module.exports = ({vs = default_vs, fs, setup, draw}) ->
         setup.call(this, Shader.shader, extra_args...)
 
     @draw = (extra_args = []) ->
+      Shader.shader.setUniform('iTime', @millis() / 1000.0);
       draw.call(this, Shader.shader, extra_args...)
+      if postprocess
+        @rect(-@width/2, -@height/2, @width, @height);
 
     Shader
   .apply {}

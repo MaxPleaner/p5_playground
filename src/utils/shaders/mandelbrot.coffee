@@ -1,11 +1,11 @@
 # Mandelbrot. See https://p5js.org/reference/#/p5/createShader
 module.exports = (Utils) ->
   Utils.ShaderBuilder({
-    fs: "
-      precision highp float; varying vec2 vPos;
+    frag: "
       uniform vec2 p;
       uniform float r;
       const int I = 500;
+
       void main() {
         vec2 c = p + vPos * r, z = c;
         float n = 0.0;
