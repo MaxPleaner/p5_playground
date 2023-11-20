@@ -2,7 +2,7 @@ module.exports = (function() {
   var Project;
   Project = this;
   this.BACKGROUND_COLOR = [255, 0, 0];
-  this.DESCRIPTION = "An interactive tool to create bezier formulas. NOTE: if applying to image pixels, you will have to remap these canvas-space values to image-space";
+  this.DESCRIPTION = "An interactive tool to create bezier formulas. Drag the points around to see updated point values. NOTE: if using these values for image manipulation, you'll have to remap them from canvas space to image space.";
   this.NO_SMOOTH = true;
   this.p1 = {
     pos: [255, 211],

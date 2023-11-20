@@ -1,37 +1,30 @@
 module.exports = ->
   Project = this
 
-  @WEBGL = true
-  @DESCRIPTION = "Using Image filters on things besides images. See https://p5js.org/reference/#/p5/filter"
-
-  @Shader = Utils.Shaders.PostProcessSinWave
+  @DESCRIPTION = "Using Image filters on things besides images. In this case, some procedural RGB noise. Essentially we just draw our shapes into a `createGraphics()` and then call `image()` with that. See https://p5js.org/reference/#/p5/filter"
+  @NO_LOOP = true
 
   @onSetup = ->
     # We create a 2d canvas that the line drawing is produced on
     @g = @createGraphics(@width, @height);
 
-    # basic initialization on the offscreen graphics
-    @g.stroke(255,0,130);
-    @g.strokeWeight(1);
-    @g.noFill();
-    @g.translate(@width / 2, @height / 2);
+    freq = 0.01
+    @g.noStroke()
 
-    Project.Shader.setup.call(this, [@g])
+    for x in [0..@width] by 4
+      for y in [0..@height] by 4
+        col = [0..2].map (i) =>
+          @noise(freq * x + (i * 1000), freq * y + (i * 1000)) * 255
+        @g.fill(col);
+        @g.rect(x, y, 4, 4);
 
-  @draw = ->
-    Utils.showFps.call(this)
+    @image(@g, 0, 0, @width, @height);
 
-    @g.background(0,30);
+    # THRESHOLD, GRAY, OPAQUE, INVERT, POSTERIZE, BLUR, ERODE, DILATE or BLUR
+    @filter(@POSTERIZE, 9)
 
-    # draw the rotating box to the 2d canvas
-    @g.push();
-    @g.rotate(@millis()/1000);
-    @g.rect(-100,-100,200,200);
-    @g.pop();
-
-    # We insert a rectangle onto our 3d canvas to hold the textured 2d rectangle
-    Project.Shader.draw.call(this, [@g])
-    @rect(-@width/2,-@height/2,@width,@height);
+  # @draw = ->
+  #   Utils.showFps.call(this)
 
   Project
 .apply {}

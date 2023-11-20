@@ -11,6 +11,7 @@
 #
 # As well as the following attributes:
 #
+#   - BACKGROUND_COLOR (array of 3 numbers, optional)
 #   - WEBGL (boolean, optional)
 #   - DESCRIPTION (string, required)
 #   - NO_LOOP (boolean, optional)
