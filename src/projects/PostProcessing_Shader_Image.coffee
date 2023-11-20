@@ -9,7 +9,7 @@ module.exports = ->
   @preload = ->
     Project.img = @loadImage("public/brick.jpeg")
 
-  @onSetup = ->
+  @setup = ->
     Project.img.resize(@width, @height)
     Project.Shader.setup.call(this, [Project.img])
 

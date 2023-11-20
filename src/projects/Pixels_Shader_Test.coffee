@@ -9,7 +9,7 @@ module.exports = ->
   @draw = ->
     Project.Shader.draw.call(this)
 
-  @onSetup = ->
+  @setup = ->
     Project.Shader.setup.call(this)
 
   Project

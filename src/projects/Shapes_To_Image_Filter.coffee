@@ -4,7 +4,7 @@ module.exports = ->
   @DESCRIPTION = "Using Image filters on things besides images. In this case, some procedural RGB noise. Essentially we just draw our shapes into a `createGraphics()` and then call `image()` with that. See https://p5js.org/reference/#/p5/filter"
   @NO_LOOP = true
 
-  @onSetup = ->
+  @setup = ->
     # We create a 2d canvas that the line drawing is produced on
     @g = @createGraphics(@width, @height);
 

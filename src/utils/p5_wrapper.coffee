@@ -1,17 +1,13 @@
 # The following methods will be invoked in the p5 lifecycle,
 # if they're defined on a particular project:
-#
-#   - setup({size, background_color, extra_args})
-#   - onSetup()
-#      this is called inside setup() but after the default functionality happens
+#   - setup()
 #   - draw()
 #   - preload()
 #   - mousePressed()
 #   - mouseReleased()
 #
 # As well as the following attributes:
-#
-#   - BACKGROUND_COLOR (array of 3 numbers, optional)
+#   - SIZE (array of 2 numbers, optional - defaults to P5Wrapper.SIZE)
 #   - WEBGL (boolean, optional)
 #   - DESCRIPTION (string, required)
 #   - NO_LOOP (boolean, optional)
@@ -25,10 +21,8 @@ module.exports = class P5Wrapper
     @paused = false
     @redrawing = false
 
-  # bound to @p5 instance
-  default_setup: ({size, background_color, webgl} = {}) ->
-    @createCanvas size[0], size[1], if webgl then @WEBGL else @P2D
-    @background background_color... if background_color
+  # The default size if the processor didn't override it.
+  @SIZE = [700,700]
 
   start: ({size, background_color, extra_args = {}} = {}) =>
     @p5 = new p5 (p) =>
@@ -38,10 +32,10 @@ module.exports = class P5Wrapper
       p.preload = @processor.preload?.bind p
 
       p.setup = =>
-        (@processor.setup || @default_setup).call p, { size, background_color, webgl: @processor.WEBGL, extra_args... }
-        @processor.onSetup.call(p) if @processor.onSetup
+        @createCanvas P5Wrapper.SIZE[0], P5Wrapper.SIZE[1], if @processor.WEBGL then @WEBGL else @P2D
         p.noLoop() if @processor.NO_LOOP
         p.noSmooth() if @processor.NO_SMOOTH
+        @processor.setup?.call p
 
       p.draw = =>
         return if @paused && !@redrawing

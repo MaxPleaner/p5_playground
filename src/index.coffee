@@ -7,10 +7,6 @@ window._ = require('lodash')
 window.Utils = require './utils.coffee'
 window.Projects = require './projects'
 
-# Global settings, these can be overridden
-# by setting a property on the individual project with the same name
-SIZE = [700, 700]
-
 # Project selector UI
 UI_Manager = ->
   window.active_project = null

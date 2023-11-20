@@ -6,7 +6,7 @@ module.exports = ->
 
   @Shader = Utils.Shaders.PostProcessSinWave
 
-  @onSetup = ->
+  @setup = ->
     # We create a 2d canvas that the line drawing is produced on
     @g = @createGraphics(@width, @height);
 

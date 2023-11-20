@@ -9,7 +9,7 @@ module.exports = ->
   @preload = ->
     Project.img = @loadImage("public/cat.jpeg")
   
-  @onSetup = ->
+  @setup = ->
     Project.img.resize 200, 200
 
   @draw = ->

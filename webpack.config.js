@@ -26,5 +26,6 @@ module.exports = {
     compress: true,
     port: 9000,
     hot: true, // Enable Hot Module Replacement
+    writeToDisk: false,
   }
 };

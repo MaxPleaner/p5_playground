@@ -14,7 +14,7 @@ module.exports = ->
   @preload = ->
     Project.img = @loadImage("public/cat.jpeg")
   
-  @onSetup = ->
+  @setup = ->
     Project.img.resize 200, 200
     for pt in Project.pts
       pt.handle = new Utils.Draggable(pt.pos[0], pt.pos[1], 10, 10)
