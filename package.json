@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "start": "webpack serve --open"
+    "start": "webpack serve --open",
+    "push": "git add -A; git commit; git push origin HEAD; git subtree push --prefix=dist origin gh-pages"
+ 
   },
   "devDependencies": {
     "coffee-loader": "^4.0.0",
