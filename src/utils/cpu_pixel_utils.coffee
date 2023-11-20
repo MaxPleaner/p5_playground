@@ -1,6 +1,6 @@
 module.exports = (Utils) ->
   ->
-    # Updating each pixel individually (shader style) has good performance.
+    # Updating each pixel individually (shader style) has decent performance.
     # Fn is called with each [r,g,b,a] pixel value.
     @update_each_pixel = (fn) ->
       @loadPixels()
@@ -24,9 +24,13 @@ module.exports = (Utils) ->
 
       @updatePixels()
 
-    # performance here is a bit more shifty
-    # Fb is called with the full list of [r,g,b,a] pixels.
-    @update_all_pixels = (fn) ->
+    # performance here is a bit more sensitive.
+    # Fn is called with a list of all pixels e.g. [[r,g,b,a], [r,g,b,a], ...]
+    # Use .get(x,y) and .set(x,y,val) in the callback to read and write values.
+    @update_image_pixels = (img, fn) ->  
+      img.loadPixels()
+      fn.call(this, img)
+      img.updatePixels()
 
     this
   .apply {}

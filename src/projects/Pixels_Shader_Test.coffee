@@ -7,7 +7,6 @@ module.exports = ->
   @Shader = Utils.Shaders.Mandelbrot
 
   @draw = ->
-    Utils.showFps.call(this)
     Project.Shader.draw.call(this)
 
   @onSetup = ->

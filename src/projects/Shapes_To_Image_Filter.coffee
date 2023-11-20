@@ -2,7 +2,7 @@ module.exports = ->
   Project = this
 
   @WEBGL = true
-  @DESCRIPTION = "Using GLSL as a postprocessor for 3D shapes. See https://graha.ms/posts/blog/2022-11-10-using-p5-shaders-for-post-processing/"
+  @DESCRIPTION = "Using Image filters on things besides images. See https://p5js.org/reference/#/p5/filter"
 
   @Shader = Utils.Shaders.PostProcessSinWave
 
