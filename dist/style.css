@@ -1,3 +1,51 @@
 button.active {
-  outline: 1px solid red;
+  outline: 3px solid green;
+}
+
+#projects {
+  max-width: 1100px;
+  margin-left: 5px;
+}
+
+#projects button {
+  width: 250px;
+  margin: 3px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#projects button:hover {
+  cursor: pointer;
+}
+
+#projects button:not(.active):hover {
+  outline: 1px solid lightgreen;
+}
+
+body {
+  padding-left: 15px;
+  background-color: black;
+  color: white;
+  font-family: monospace !important;
+  margin-bottom: 100px;
+}
+
+#description, #code-link {
+  font-weight: bold;
+  font-size: 1.3em;
+  max-width: 1100px;
+}
+
+
+button {
+  font-family: inherit;
+  font-size: 1em;
+}
+
+a, a:visited {
+  color: lightgreen;
+}
+
+a:hover {
+  color: greenyellow;
 }
