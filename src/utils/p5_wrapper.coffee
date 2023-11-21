@@ -14,6 +14,14 @@
 #       if true, draw will only happen manually
 #   - NO_SMOOTH (boolean, optional)
 #       if true, won't apply anti aliasing
+#   - PARAMS (array of dictionaries)
+#       these are exposed to the UI
+#       each dictionary has the following keys:
+#       - name (string, required)
+#       - type (string, required, either string, float, int, bool, or color)
+#       - default
+#       - min (number, optional, only used for float/int)
+#       - max (number, optional, only used for float/int)
 
 module.exports = class P5Wrapper
   constructor: (processor) ->
@@ -32,12 +40,17 @@ module.exports = class P5Wrapper
       p.preload = @processor.preload?.bind p
 
       p.setup = =>
-        @createCanvas P5Wrapper.SIZE[0], P5Wrapper.SIZE[1], if @processor.WEBGL then @WEBGL else @P2D
-        p.noLoop() if @processor.NO_LOOP
-        p.noSmooth() if @processor.NO_SMOOTH
-        @processor.setup?.call p
+        processor = @processor
+        ->
+          size = processor.SIZE || P5Wrapper.SIZE
+          @createCanvas size[0], size[1], if processor.WEBGL then @WEBGL else @P2D
+          @noLoop() if processor.NO_LOOP
+          @noSmooth() if processor.NO_SMOOTH
+          processor.setup?.call this
+        .call p
 
       p.draw = =>
+        Utils.showFps.call(p)
         return if @paused && !@redrawing
         @processor.draw?.call p
         @redrawing = false

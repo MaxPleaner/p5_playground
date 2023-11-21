@@ -4,34 +4,37 @@ module.exports = ->
   @WEBGL = true
   @DESCRIPTION = "Using GLSL as a postprocessor for 3D shapes. See https://graha.ms/posts/blog/2022-11-10-using-p5-shaders-for-post-processing/"
 
-  @Shader = Utils.Shaders.PostProcessSinWave
-
   @setup = ->
     # We create a 2d canvas that the line drawing is produced on
-    @g = @createGraphics(@width, @height);
+    @graphics = @createGraphics(@width, @height);
 
     # basic initialization on the offscreen graphics
-    @g.stroke(255,0,130);
-    @g.strokeWeight(1);
-    @g.noFill();
-    @g.translate(@width / 2, @height / 2);
-
-    Project.Shader.setup.call(this, [@g])
+    @graphics.stroke(255,0,130);
+    @graphics.strokeWeight(1);
+    @graphics.noFill();
+    @graphics.translate(@width / 2, @height / 2);
 
   @draw = ->
     Utils.showFps.call(this)
 
-    @g.background(0,30);
+    @graphics.background(0,30);
 
     # draw the rotating box to the 2d canvas
-    @g.push();
-    @g.rotate(@millis()/1000);
-    @g.rect(-100,-100,200,200);
-    @g.pop();
+    @graphics.push();
+    @graphics.rotate(@millis()/1000);
+    @graphics.rect(-100,-100,200,200);
+    @graphics.pop();
 
     # We insert a rectangle onto our 3d canvas to hold the textured 2d rectangle
-    Project.Shader.draw.call(this, [@g])
     @rect(-@width/2,-@height/2,@width,@height);
+
+  Utils.applyMacro this, Utils.Shaders.PostProcessSinWave(
+    add: (shader) ->
+      @shader(shader)
+    draw: (shader) ->
+      shader.setUniform('p5Drawing', @graphics)
+  )
+
 
   Project
 .apply {}

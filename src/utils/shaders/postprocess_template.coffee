@@ -1,7 +1,6 @@
 # Mandelbrot. See https://p5js.org/reference/#/p5/createShader
 module.exports = (Utils) ->
   Utils.ShaderBuilder({
-    postprocess: true
     frag: """
       uniform sampler2D p5Drawing;
 

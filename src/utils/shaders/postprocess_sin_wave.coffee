@@ -1,13 +1,14 @@
 # Mandelbrot. See https://p5js.org/reference/#/p5/createShader
 module.exports = (Utils) ->
-  Utils.ShaderBuilder({
-    postprocess: true
-    frag: """
+  _Shader = ->
+    @postprocess = true
+
+    @frag = """
       uniform sampler2D p5Drawing;
 
-      const float period = 30.0;
-      const float speed = 10.0;
-      const float amp = 0.02;
+      uniform float period;
+      uniform float speed;
+      uniform float amp;
 
       void main() {
         vec2 uv = vTexCoord;
@@ -15,12 +16,23 @@ module.exports = (Utils) ->
         uv.y += sin(sinVal) * amp;
         vec4 col = texture2D(p5Drawing, uv);
         gl_FragColor = col;
-  }
+      }
     """
 
-    setup: (shader, graphics) ->
+    @params = {
+      period: 30.0,
+      speed: 10.0,
+      amp: 0.02
+    }
 
-    draw: (shader, graphics) ->
-      shader.setUniform('p5Drawing', graphics);
+    @setup = (p5) =>
 
-  })
+    @draw = (p5, shader) =>
+      shader.setUniform('period', @params.period)
+      shader.setUniform('speed', @params.speed)
+      shader.setUniform('amp', @params.amp)
+
+    this
+  .apply {}
+
+  Utils.ShaderBuilder(_Shader)

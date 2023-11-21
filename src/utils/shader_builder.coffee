@@ -18,35 +18,31 @@ default_frag_frontmatter = """
       uniform float iTime;
 """
 
-module.exports = ({vert = default_vert, postprocess, frag, setup, draw}) ->
+module.exports = ({vert = default_vert, frag, setup, draw}) ->
   frag = default_frag_frontmatter + frag
 
-  ->
-    Shader = this
+  (opts) -> # user passes draw and setup functions here
+    ->
+      userSetup = opts.setup
+      userDraw = opts.draw
+      userAdd = opts.add
 
-    @checkShaderError = (shaderObj, shaderText) =>
-      gl = shaderObj._renderer.GL
-      glFragShader = gl.createShader(gl.FRAGMENT_SHADER)
-      gl.shaderSource(glFragShader, shaderText)
-      gl.compileShader(glFragShader)
-      if !gl.getShaderParameter(glFragShader, gl.COMPILE_STATUS)
-        return gl.getShaderInfoLog(glFragShader)
-      return null
+      Shader = this
 
-    @setup = (extra_args = []) ->
-      Shader.shader = @createShader(vert, frag)
-      shaderError = Shader.checkShaderError(Shader.shader, frag)
-      if shaderError
-        throw shaderError
-      else
-        @shader(Shader.shader)
-        setup.call(this, Shader.shader, extra_args...)
+      @setup = ->
+        Shader.shader = this.createShader(vert, frag)
+        shaderError = Utils.checkShaderError(Shader.shader, frag)
+        if shaderError
+          throw shaderError
+        else
+          userAdd?.call(this, Shader.shader)
+          setup(this, Shader.shader)
+          userSetup?.call(this, Shader.shader)
 
-    @draw = (extra_args = []) ->
-      Shader.shader.setUniform('iTime', @millis() / 1000.0);
-      draw.call(this, Shader.shader, extra_args...)
-      if postprocess
-        @rect(-@width/2, -@height/2, @width, @height);
+      @draw = ->
+        Shader.shader.setUniform('iTime', @millis() / 1000.0);
+        draw(this, Shader.shader)
+        userDraw?.call(this, Shader.shader)
 
-    Shader
-  .apply {}
+      Shader
+    .apply {}

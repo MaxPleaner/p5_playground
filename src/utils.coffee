@@ -22,11 +22,31 @@ module.exports = ->
     BezierCreator: require('./utils/mixins/bezier_creator')(this)
 
   # ===============
-  # Pixel Utils
+  # Macros
+  # ===============
+
+  @applyMacro = (project, macro) ->
+    Object.entries(macro).forEach ([key, addedFn]) ->
+      orig = project[key]
+      project[key] = (args...) ->
+        orig?.call(this, args...)
+        addedFn.call(this, args...)
+
+  # ===============
+  # Pixel / Shader utils
   # ===============
 
   @luminance = (pixel) ->
     0.299 * pixel[0] + 0.587 * pixel[1] + 0.114 * pixel[2]
+
+  @checkShaderError = (shaderObj, shaderText) =>
+    gl = shaderObj._renderer.GL
+    glFragShader = gl.createShader(gl.FRAGMENT_SHADER)
+    gl.shaderSource(glFragShader, shaderText)
+    gl.compileShader(glFragShader)
+    if !gl.getShaderParameter(glFragShader, gl.COMPILE_STATUS)
+      return gl.getShaderInfoLog(glFragShader)
+    return null
 
   # ===============
   # Shaping Functions
@@ -43,7 +63,7 @@ module.exports = ->
   # ===============
   # UI Helpers
   # ===============
-
+  
   @showFps = ->
     Utils.fps ||= $("#fps")
     Utils.fps.text("FPS: #{@frameRate().toFixed()}")

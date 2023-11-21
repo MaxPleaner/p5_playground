@@ -1,5 +1,6 @@
 module.exports = class Draggable
-  constructor: (x, y, w, h) ->
+  constructor: ({webgl, x, y, w, h}) ->
+    @webgl = webgl
     @dragging = false # Is the object being dragged?
     @rollover = false # Is the mouse over the ellipse?
     @x = x
@@ -8,10 +9,22 @@ module.exports = class Draggable
     @h = h
     @offsetX = 0
     @offsetY = 0
+  
+  mouseX: (p5) ->
+    if @webgl
+      p5.mouseX - p5.width / 2
+    else
+      p5.mouseX
+  
+  mouseY: (p5) ->
+    if @webgl
+      p5.mouseY - p5.height / 2
+    else
+      p5.mouseY
 
   over: (p5) ->
     # Is mouse over object
-    if p5.mouseX > @x and p5.mouseX < @x + @w and p5.mouseY > @y and p5.mouseY < @y + @h
+    if @mouseX(p5) > @x and @mouseX(p5) < @x + @w and p5.mouseY > @y and p5.mouseY < @y + @h
       @rollover = true
     else
       @rollover = false
@@ -19,8 +32,8 @@ module.exports = class Draggable
   update: (p5) ->
     # Adjust location if being dragged
     if @dragging
-      @x = p5.mouseX + @offsetX
-      @y = p5.mouseY + @offsetY
+      @x = @mouseX(p5) + @offsetX
+      @y = @mouseY(p5) + @offsetY
 
   show: (p5) ->
     p5.stroke 0
@@ -35,11 +48,11 @@ module.exports = class Draggable
 
   pressed: (p5) ->
     # Did I click on the rectangle?
-    if p5.mouseX > @x and p5.mouseX < @x + @w and p5.mouseY > @y and p5.mouseY < @y + @h
+    if @mouseX(p5) > @x and @mouseX(p5) < @x + @w and @mouseY(p5) > @y and @mouseY(p5) < @y + @h
       @dragging = true
       # If so, keep track of relative location of click to corner of rectangle
-      @offsetX = @x - p5.mouseX
-      @offsetY = @y - p5.mouseY
+      @offsetX = @x - @mouseX(p5)
+      @offsetY = @y - @mouseY(p5)
 
   released: ->
     # Quit dragging

@@ -1,6 +1,7 @@
 # Mandelbrot. See https://p5js.org/reference/#/p5/createShader
 module.exports = (Utils) ->
-  Utils.ShaderBuilder({
+  Utils.ShaderBuilder
+
     frag: "
       uniform vec2 p;
       uniform float r;
@@ -20,11 +21,8 @@ module.exports = (Utils) ->
       }
     "
 
-    setup: (shader) ->
-      @noStroke()
+    setup: (p5, shader) ->
       shader.setUniform('p', [-0.74364388703, 0.13182590421])
 
-    draw: (shader) ->
-      shader.setUniform('r', 1.5 * Math.exp(-6.5 * (1 + Math.sin(Date.now() / 2000))));
-      @quad(-1, -1, 1, -1, 1, 1, -1, 1)
-  })
+    draw: (p5, shader) ->
+      shader.setUniform('r', 1.5 * Math.exp(-6.5 * (1 + Math.sin(p5.millis() / 2000))));

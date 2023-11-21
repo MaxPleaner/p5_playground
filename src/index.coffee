@@ -21,15 +21,13 @@ UI_Manager = ->
       $button.click (e) ->
         $("#custom_msg").text("")
         $("#description").text(project.DESCRIPTION)
+        $("#metadata").text("Metadata: webgl=#{!!project.WEBGL}, loop=#{!project.NO_LOOP}, smooth=#{!project.NO_SMOOTH}")
         active_button?.removeClass "active"
         active_button = $button
         active_button.addClass "active"
         active_project?.remove()
         window.active_project = new Utils.P5Wrapper(project)
-        active_project.start({
-          size: project.SIZE || SIZE,
-          background_color: project.BACKGROUND_COLOR
-        })
+        active_project.start()
       buttons[name] = $button
     
     $("#pause").click (e) ->

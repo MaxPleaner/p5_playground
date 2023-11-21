@@ -5,6 +5,7 @@ module.exports = ->
   @DESCRIPTION = "Using a bezier as boundaries for a pixel sorting function. See https://happycoding.io/tutorials/p5js/images/pixel-sorter"
   @NO_LOOP = true
   @NO_SMOOTH = true
+  @WEBGL = true
 
   @preload = ->
     Project.img = @loadImage("public/cat.jpeg")
@@ -55,7 +56,7 @@ module.exports = ->
           if new_val
             img.set(x, y, new_val)
 
-    @image Project.img, 0, 0, @width, @height
+    @image Project.img, -@width / 2, -@height / 2, @width, @height
 
   Project
 .apply {}
