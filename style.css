@@ -30,10 +30,14 @@ body {
   margin-bottom: 100px;
 }
 
-#description, #code-link {
+#description, .code-link {
   font-weight: bold;
   font-size: 1.3em;
   max-width: 1100px;
+}
+
+.code-link {
+  margin-right: 10px;
 }
 
 
