@@ -1,5 +1,5 @@
 module.exports = ->
-  @DESCRIPTION = "Manipulating pixels one by one in a CPU loop. See https://p5js.org/reference/#/p5/pixels"
+  @DESCRIPTION = "Manipulating pixels one by one in a CPU loop. Use mouse to control. Bad performance is, expected, unfortunately. See https://p5js.org/reference/#/p5/pixels"
   @WEBGL = true
 
   @draw = ->

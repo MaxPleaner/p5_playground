@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack serve --open",
-    "push": "git add -A; git commit; git push origin HEAD; git subtree push --prefix=dist origin gh-pages"
+    "push": "yarn build; git add -A; git commit; git push origin HEAD; git subtree push --prefix=dist origin gh-pages"
  
   },
   "devDependencies": {
