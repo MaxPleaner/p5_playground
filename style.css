@@ -49,3 +49,15 @@ a, a:visited {
 a:hover {
   color: greenyellow;
 }
+
+canvas {
+  border: 1px solid white
+}
+
+.category {
+}
+
+.project {
+  list-style: none;
+  display: inline-block;
+}
