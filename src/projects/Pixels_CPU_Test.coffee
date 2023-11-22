@@ -3,9 +3,6 @@ module.exports = ->
 
   @DESCRIPTION = "Manipulating pixels one by one in a CPU loop. See https://p5js.org/reference/#/p5/pixels"
 
-  @setup = ->
-    @background(255, 0, 0)
-
   @draw = ->
     Utils.showFps.call(this)
     @fill 255

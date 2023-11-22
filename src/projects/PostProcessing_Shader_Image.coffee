@@ -11,8 +11,6 @@ module.exports = ->
     { name: "amp", type: "float", default: 0.02, min: 0, max: 0.1 }
   ]
 
-  @Shader = Utils.Shaders.PostProcessSinWave
-
   @preload = ->
     Project.img = @loadImage("public/brick.jpeg")
 
@@ -22,7 +20,7 @@ module.exports = ->
   @draw = ->
     @rect(-@width/2, -@height/2, @width, @height);
 
-  Utils.applyMacro this, Utils.Shaders.PostProcessSinWave(
+  Utils.applyMacro this, Utils.Shaders.SinWave(
     add: (shader) ->
       @shader(shader)
     draw: (shader) ->

@@ -32,6 +32,26 @@ module.exports = ->
         orig?.call(this, args...)
         addedFn.call(this, args...)
 
+  @addShaderSequence = (project, origGraphicsKey, shaders) ->
+    if shaders.length == 0
+      return Utils.applyMacro project, setup: ->
+        project.graphics_to_show = project[origGraphicsKey]
+
+    shaders.forEach (shader, idx) =>
+      shaderMacro = shader(
+        preSetup: (shader) ->
+          this["graphics#{idx}"] = @createGraphics(@width, @height, @WEBGL)
+          if idx == shaders.length - 1
+            project.graphics_to_show = this["graphics#{idx}"]
+        add: (shader) ->
+          this["graphics#{idx}"].shader(shader)
+        draw: (shader) ->
+          this["graphics#{idx}"].rect(-@width/2, -@height/2, @width, @height);
+          source = if idx == 0 then project[origGraphicsKey] else this["graphics#{idx-1}"]
+          shader.setUniform('p5Drawing', source)
+      )
+      Utils.applyMacro project, shaderMacro
+
   # ===============
   # Pixel / Shader utils
   # ===============

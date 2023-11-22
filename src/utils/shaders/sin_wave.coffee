@@ -1,4 +1,3 @@
-# Mandelbrot. See https://p5js.org/reference/#/p5/createShader
 module.exports = (Utils) ->
   _Shader = ->
     @postprocess = true
@@ -20,9 +19,9 @@ module.exports = (Utils) ->
     """
 
     @params = {
-      period: 30.0,
+      period: 100.0,
       speed: 10.0,
-      amp: 0.02
+      amp: 0.01
     }
 
     @setup = (p5) =>

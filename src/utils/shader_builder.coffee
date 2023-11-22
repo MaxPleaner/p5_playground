@@ -7,6 +7,7 @@ default_vert = """
     vTexCoord = aTexCoord;
     vec4 positionVec4 = vec4(aPosition, 1.0);
     positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+    positionVec4.y *= -1.0;
     gl_Position = positionVec4;
     vPos = gl_Position.xy;
   }
@@ -16,6 +17,10 @@ default_frag_frontmatter = """
       precision highp float; varying vec2 vPos;
       varying vec2 vTexCoord;
       uniform float iTime;
+
+      float luminance(vec3 col) {
+        return 0.299 * col[0] + 0.587 * col[1] + 0.114 * col[2];
+      }
 """
 
 module.exports = ({vert = default_vert, frag, setup, draw}) ->
@@ -26,6 +31,7 @@ module.exports = ({vert = default_vert, frag, setup, draw}) ->
       userSetup = opts.setup
       userDraw = opts.draw
       userAdd = opts.add
+      userPreSetup = opts.preSetup
 
       Shader = this
 
@@ -35,6 +41,7 @@ module.exports = ({vert = default_vert, frag, setup, draw}) ->
         if shaderError
           throw shaderError
         else
+          userPreSetup?.call(this, Shader.shader)
           userAdd?.call(this, Shader.shader)
           setup(this, Shader.shader)
           userSetup?.call(this, Shader.shader)
