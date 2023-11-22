@@ -1,17 +1,15 @@
 module.exports = ->
-  Project = this
-
   @DESCRIPTION = "Manipulating pixels one by one in a CPU loop. See https://p5js.org/reference/#/p5/pixels"
+  @WEBGL = true
 
   @draw = ->
-    Utils.showFps.call(this)
     @fill 255
-    @ellipse @mouseX, @mouseY, 50, 50
+    @ellipse @mouseX - @width / 2, @mouseY - @height / 2, 50, 50
 
     Utils.update_each_pixel.call this, (pixel) ->
-      pixel = Utils.brighten(pixel, 0.95)
-      pixel = Utils.threshold pixel, 20, 255
+      pixel = Utils.PixelOps.brighten(pixel, 0.95)
+      pixel = Utils.PixelOps.threshold pixel, 20, 255
       pixel
 
-  Project
+  this
 .apply {}

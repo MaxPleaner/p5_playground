@@ -36,13 +36,13 @@ module.exports = class P5Wrapper
     @p5 = new p5 (p) =>
       p.mousePressed = @processor.mousePressed?.bind p
       p.mouseReleased = @processor.mouseReleased?.bind p
-
       p.preload = @processor.preload?.bind p
 
       p.setup = =>
         processor = @processor
         ->
           size = processor.SIZE || P5Wrapper.SIZE
+          # TODO: overwrite mouseX and mouseY here to work with WEBGL
           @createCanvas size[0], size[1], if processor.WEBGL then @WEBGL else @P2D
           @noLoop() if processor.NO_LOOP
           @noSmooth() if processor.NO_SMOOTH
@@ -54,6 +54,7 @@ module.exports = class P5Wrapper
         return if @paused && !@redrawing
         @processor.draw?.call p
         @redrawing = false
+
     this
 
   redraw: ->

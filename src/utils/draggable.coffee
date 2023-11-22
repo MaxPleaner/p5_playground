@@ -1,5 +1,5 @@
 module.exports = class Draggable
-  constructor: ({webgl, x, y, w, h}) ->
+  constructor: ({webgl, x, y, w, h, color}) ->
     @webgl = webgl
     @dragging = false # Is the object being dragged?
     @rollover = false # Is the mouse over the ellipse?
@@ -9,6 +9,7 @@ module.exports = class Draggable
     @h = h
     @offsetX = 0
     @offsetY = 0
+    @color = color
   
   mouseX: (p5) ->
     if @webgl
@@ -39,11 +40,11 @@ module.exports = class Draggable
     p5.stroke 0
     # Different fill based on state
     if @dragging
-      p5.fill 50
+      p5.fill [100, 100, 100]
     else if @rollover
-      p5.fill 100
+      p5.fill [255, 255, 255]
     else
-      p5.fill 175, 200
+      p5.fill @color
     p5.rect @x, @y, @w, @h
 
   pressed: (p5) ->

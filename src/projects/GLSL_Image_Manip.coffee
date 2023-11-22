@@ -12,19 +12,17 @@ module.exports = ->
   ]
 
   @preload = ->
-    Project.img = @loadImage("public/brick.jpeg")
+    @img = @loadImage("public/brick.jpeg")
 
   @setup = ->
-    Project.img.resize(@width, @height)
-
-  @draw = ->
-    @rect(-@width/2, -@height/2, @width, @height);
+    @img.resize(@width, @height)
 
   Utils.applyMacro this, Utils.Shaders.SinWave(
     add: (shader) ->
       @shader(shader)
     draw: (shader) ->
-      shader.setUniform('p5Drawing', Project.img)
+      shader.setUniform('p5Drawing', @img)
+      @rect(-@width/2, -@height/2, @width, @height);
   )
 
   Project

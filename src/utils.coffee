@@ -12,17 +12,17 @@ module.exports = ->
   @Draggable = require("./utils/draggable")
   
   Object.assign(this, require('./utils/cpu_pixel_utils')(this))
-  Object.assign(this, require('./utils/cpu_pixel_operators')(this))
+  @PixelOps = require('./utils/cpu_pixel_operators')(this)
 
   @ShaderBuilder = require('./utils/shader_builder')
   @Shaders = require('./utils/shaders')(this)
 
   # Mixing are designed as feature sets which can be easily added to a project.
-  @Mixins =
-    BezierCreator: require('./utils/mixins/bezier_creator')(this)
+  @Macros = require("./utils/macros")(this)
 
   # ===============
   # Macros
+  # TODO: move these to macros file
   # ===============
 
   @applyMacro = (project, macro) ->
@@ -54,6 +54,7 @@ module.exports = ->
 
   # ===============
   # Pixel / Shader utils
+  # TODO: move these to somewhere else
   # ===============
 
   @luminance = (pixel) ->
@@ -70,6 +71,7 @@ module.exports = ->
 
   # ===============
   # Shaping Functions
+  # TODO: move somewhere else
   # ===============
 
   @cubicBezier = (t, P0, P1, P2, P3) ->
@@ -82,6 +84,7 @@ module.exports = ->
 
   # ===============
   # UI Helpers
+  # TODO: move to own file
   # ===============
   
   @showFps = ->
