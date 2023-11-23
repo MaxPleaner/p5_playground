@@ -62,6 +62,7 @@ module.exports = class P5Wrapper
     @p5.redraw()
 
   remove: ->
+    @processor.gui?.destroy()
     @p5.remove()
 
   pause: ->

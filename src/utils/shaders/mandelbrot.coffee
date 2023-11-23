@@ -24,5 +24,5 @@ module.exports = (Utils) ->
     setup: (p5, shader) ->
       shader.setUniform('p', [-0.74364388703, 0.13182590421])
 
-    draw: (p5, shader) ->
-      shader.setUniform('r', 1.5 * Math.exp(-6.5 * (1 + Math.sin(p5.millis() / 2000))));
+    setUniforms: (p5, shader) ->
+      r: 1.5 * Math.exp(-6.5 * (1 + Math.sin(p5.millis() / 2000)))

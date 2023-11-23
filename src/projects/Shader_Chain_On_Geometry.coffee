@@ -2,44 +2,60 @@ module.exports = ->
   Project = this
 
   @WEBGL = true
-  @DESCRIPTION = "Using GLSL as a postprocessor for 3D shapes. Use mouse to control. Click to accelerate. It's passing through a sequence of shaders (sin wave, thresholding, pixelation). See https://graha.ms/posts/blog/2022-11-10-using-p5-shaders-for-post-processing/"
+  @DESCRIPTION = "Using GLSL as a postprocessor for 3D shapes. Use mouse to control. Click to increase the effect. It's passing through a sequence of shaders (sin wave, thresholding, pixelation). See https://graha.ms/posts/blog/2022-11-10-using-p5-shaders-for-post-processing/"
 
   @setup = ->
-    Project.graphics = @createGraphics(@width, @height, @WEBGL);
+    @graphics = @createGraphics(@width, @height, @WEBGL);
 
-    Project.graphics.strokeWeight(1);
-    Project.graphics.noFill();
+    @graphics.strokeWeight(1);
+    @graphics.noFill();
 
   @draw = ->
     Utils.showFps.call(this)
 
-    Project.graphics.background(0, 10);
+    @graphics.background(0, 10);
 
     mouseX = @mouseX - @width / 2
     mouseY = @mouseY - @height / 2
 
-    acceleration = 0.1
-    if @mouseIsPressed
-      acceleration += 1
-    else
-      acceleration -= 1
-    acceleration = Math.max(0.1, Math.min(acceleration, 2.0))
-
     # draw the rotating box to the 2d canvas
-    Project.graphics.push();
-    Project.graphics.stroke(255,0,130);
-    Project.graphics.translate(mouseX, mouseY);
-    Project.graphics.rotate(acceleration * @millis() / 100);
-    Project.graphics.rect(-50,-50,100,100);
-    Project.graphics.pop();
+    @graphics.push();
+    @graphics.stroke(255,0,130);
+    @graphics.translate(mouseX, mouseY);
+    @graphics.rotate((@millis()) / 1000);
+    @graphics.rect(-50,-50,100,100);
+    @graphics.pop();
 
-    @image(Project.graphics_to_show, -@width / 2, -@height / 2, @width, @height)
+    @image(@shader_out, -@width / 2, -@height / 2, @width, @height)
 
-  Utils.addShaderSequence(this, 'graphics', [
-    Utils.Shaders.SinWave,
-    Utils.Shaders.Threshold,
-    Utils.Shaders.Pixelate
-  ])
+  Utils.addShaderSequence(this, [
+    [Utils.Shaders.SinWave, {
+      setUniforms: (shader) ->
+        increment = 0.01
+
+        @speed ||= 10.0
+        @amp ||= 0.01
+        if @mouseIsPressed
+          @speed *= 1 + increment
+          @amp *= 1 + increment
+        else
+          @speed *= 1 - increment
+          @amp *= 1 - increment
+        
+        @speed = Math.max(Math.min(@speed, 50.0), 10.0)
+        @amp = Math.max(Math.min(@amp, 0.5), 0.01)
+        
+        {
+          speed: @speed,
+          amp: @amp
+        }
+    }]
+    [Utils.Shaders.Threshold, {}]
+    [Utils.Shaders.Pixelate, {}]
+  ], {
+    input: -> @graphics,
+    output: (result) -> @shader_out = result
+  })
 
   Project
 .apply {}

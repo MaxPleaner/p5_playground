@@ -2,6 +2,9 @@
 window.p5 = require 'p5'
 window.$ = require('jquery')
 window._ = require('lodash')
+require './vendor/p5.gui/p5.gui.js'
+window.QuickSettings = require './vendor/p5.gui/quicksettings.js'
+# debugger
 
 # Custom deps
 window.Utils = require './utils.coffee'

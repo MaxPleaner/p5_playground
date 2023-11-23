@@ -23,17 +23,24 @@ default_frag_frontmatter = """
       }
 """
 
-module.exports = ({vert = default_vert, frag, setup, draw}) ->
+module.exports = ({vert = default_vert, frag, setup, setUniforms, preload}) ->
   frag = default_frag_frontmatter + frag
+
+  shaderSetup = setup || ->
+  shaderSetUniforms = setUniforms || ->
 
   (opts) -> # user passes draw and setup functions here
     ->
+      userPreload = opts.preload
       userSetup = opts.setup
-      userDraw = opts.draw
+      userSetUniforms = opts.setUniforms
       userAdd = opts.add
-      userPreSetup = opts.preSetup
+      Uniforms = {}
 
       Shader = this
+
+      @preload = ->
+        userPreload?.call(this)
 
       @setup = ->
         Shader.shader = this.createShader(vert, frag)
@@ -41,15 +48,16 @@ module.exports = ({vert = default_vert, frag, setup, draw}) ->
         if shaderError
           throw shaderError
         else
-          userPreSetup?.call(this, Shader.shader)
           userAdd?.call(this, Shader.shader)
-          setup(this, Shader.shader)
+          shaderSetup(this, Shader.shader)
           userSetup?.call(this, Shader.shader)
 
       @draw = ->
         Shader.shader.setUniform('iTime', @millis() / 1000.0);
-        draw(this, Shader.shader)
-        userDraw?.call(this, Shader.shader)
+        Object.assign(Uniforms, shaderSetUniforms(this, Shader.shader))
+        Object.assign(Uniforms, userSetUniforms?.call(this, Shader.shader))
+        Object.entries(Uniforms).forEach ([key, val]) ->
+          Shader.shader.setUniform(key, val)
 
       Shader
     .apply {}

@@ -32,23 +32,32 @@ module.exports = ->
         orig?.call(this, args...)
         addedFn.call(this, args...)
 
-  @addShaderSequence = (project, origGraphicsKey, shaders) ->
+  # input and output are functions, called with `this` set to the p5 instance.
+  # they should determine where to fetch the input from and where to draw the output to.
+  # Note that this function assumes the shader has a sampler2D uniform called 'p5Drawing'.
+  @addShaderSequence = (project, shaders, {input, output}) ->
     if shaders.length == 0
-      return Utils.applyMacro project, setup: ->
-        project.graphics_to_show = project[origGraphicsKey]
+      throw "Shader Sequence needs at least one entry. Use Noop shader if you don't want to do anything."
 
-    shaders.forEach (shader, idx) =>
+    shaders.forEach ([shader, {setup, setUniforms}], idx) =>
+      userSetup = setup
+      userSetUniforms = setUniforms
+
       shaderMacro = shader(
-        preSetup: (shader) ->
+        add: (shader) ->
           this["graphics#{idx}"] = @createGraphics(@width, @height, @WEBGL)
           if idx == shaders.length - 1
-            project.graphics_to_show = this["graphics#{idx}"]
-        add: (shader) ->
+            output.call(this, this["graphics#{idx}"])
           this["graphics#{idx}"].shader(shader)
-        draw: (shader) ->
+
+        setup: (shader) ->
+          userSetup?.call(this, shader)
+
+        setUniforms: (shader) ->
           this["graphics#{idx}"].rect(-@width/2, -@height/2, @width, @height);
-          source = if idx == 0 then project[origGraphicsKey] else this["graphics#{idx-1}"]
+          source = if idx == 0 then input.call(this) else this["graphics#{idx-1}"]
           shader.setUniform('p5Drawing', source)
+          userSetUniforms?.call(this, shader)
       )
       Utils.applyMacro project, shaderMacro
 

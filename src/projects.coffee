@@ -4,7 +4,7 @@ module.exports =
 
   # ===========================================================================
   # This is the project that will be run by default when you first open the page
-  DEFAULT_PROJECT_NAME: 'Bezier_Creator'
+  DEFAULT_PROJECT_NAME: 'Multiple_Shaders'
   # ===========================================================================
 
   FRAMEWORK_DEVELOPMENT:
@@ -16,3 +16,7 @@ module.exports =
     Shapes_To_Image_Filter: require('./projects/Shapes_To_Image_Filter')
     Multiple_Shaders: require('./projects/Multiple_Shaders')
     Shader_Chain_On_Geometry: require('./projects/Shader_Chain_On_Geometry')
+  
+  ECOSYSTEM_EXPLORATION:
+    {
+    }

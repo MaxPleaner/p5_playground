@@ -26,10 +26,12 @@ module.exports = (Utils) ->
 
     @setup = (p5) =>
 
-    @draw = (p5, shader) =>
-      shader.setUniform('period', @params.period)
-      shader.setUniform('speed', @params.speed)
-      shader.setUniform('amp', @params.amp)
+    @setUniforms = (p5, shader) =>
+      {
+        period: @params.period,
+        speed: @params.speed,
+        amp: @params.amp
+      }
 
     this
   .apply {}

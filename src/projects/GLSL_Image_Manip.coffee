@@ -17,12 +17,14 @@ module.exports = ->
   @setup = ->
     @img.resize(@width, @height)
 
+  @draw = ->
+    @rect(-@width/2, -@height/2, @width, @height);
+
   Utils.applyMacro this, Utils.Shaders.SinWave(
     add: (shader) ->
       @shader(shader)
-    draw: (shader) ->
-      shader.setUniform('p5Drawing', @img)
-      @rect(-@width/2, -@height/2, @width, @height);
+    setUniforms: (shader) ->
+      p5Drawing: @img
   )
 
   Project
