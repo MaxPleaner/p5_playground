@@ -2,8 +2,6 @@
  * @module QuickSettings
  */
 (function () {
-
-
   ////////////////////////////////////////////////////////////////////////////////
   // region PRIVATE GENERIC UTILS
   ////////////////////////////////////////////////////////////////////////////////
@@ -129,9 +127,10 @@
        * @returns {module:QuickSettings}    New QuickSettings Panel
        * @static
        */
-      create: function (x, y, title, parent) {
+      create: function (x, y, title, parent, userParams) {
           var obj = Object.create(this);
           obj._init(x, y, title, parent);
+          obj.userParams = userParams
           return obj;
       },
 
@@ -1237,8 +1236,8 @@
               }
           };
 
-        //   var eventName = "input";
-          var eventName = "change";
+          var eventName = "input";
+          if (!this.userParams.liveUpdate) { var eventName = "change" };
           if (type === "range" && isIE()) {
               eventName = "change";
           }

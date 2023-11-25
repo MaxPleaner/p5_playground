@@ -32,8 +32,13 @@ module.exports = ->
     p5._gui = p5.createGui(p5)
     p5._gui.addObject(params_object)
     { top, right } = p5.canvas.getBoundingClientRect()
-    offset = p5._gui.content().getBoundingClientRect().width
-    p5._gui.setPosition(right - offset, top)
+
+    offset_right = p5._gui.content().getBoundingClientRect().width
+    # offset_top = p5._gui.content().getBoundingClientRect().height
+    # offset_top = 0
+    offset_top = window.scrollY
+
+    p5._gui.setPosition(right - offset_right, top + offset_top)
     p5._gui
 
   # ===============

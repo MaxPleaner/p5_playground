@@ -9,6 +9,8 @@ module.exports = ->
 
   @PARAMS = {
     selection_size: 5,
+    selection_sizeMin: 2,
+    selection_sizeMax: 30,
     diagonal: false,
     canvasSize: 700
     canvasSizeMin: 200

@@ -4,7 +4,7 @@ module.exports =
 
   # ===========================================================================
   # This is the project that will be run by default when you first open the page
-  DEFAULT_PROJECT_NAME: 'Pixel_Sorting_2'
+  DEFAULT_PROJECT_NAME: 'Trunk'
   # DEFAULT_PROJECT_NAME: 'Multiple_Shaders'
   # ===========================================================================
 
@@ -19,5 +19,6 @@ module.exports =
     Shader_Chain_On_Geometry: require('./projects/Shader_Chain_On_Geometry')
   
   CLONES:
-    Pixel_Sorting_1: require("./projects/Generated_Space_Pixel_Sorting_1")
-    Pixel_Sorting_2: require("./projects/Generated_Space_Pixel_Sorting_2")
+    # Pixel_Sorting_1: require("./projects/Generated_Space_Pixel_Sorting_1")
+    Similar_Pixels_Sort: require("./projects/Generated_Space_Pixel_Sorting")
+    Trunk: require("./projects/Generated_Space_Trunk")

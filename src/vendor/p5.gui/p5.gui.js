@@ -19,7 +19,7 @@
   // You only need to pass a reference to the sketch in instance mode
 
   // Usually you will call createGui(this, 'label');
-  p5.prototype.createGui = function(sketch, label, provider) {
+  p5.prototype.createGui = function(sketch, label, provider, { liveUpdate = true } = {}) {
 
     // createGui(label) signature
     if ((typeof sketch) === 'string') {
@@ -52,7 +52,7 @@
     if(provider === 'QuickSettings') {
       if(QuickSettings) {
         console.log('Creating p5.gui powered by QuickSettings.');
-        gui = new QSGui(label, parent, sketch);
+        gui = new QSGui(label, parent, sketch, {liveUpdate});
       } else {
         console.log('QuickSettings not found. Is the script included in your HTML?');
         gui = new DummyGui(label, parent, sketch);
@@ -101,13 +101,13 @@
 
 
   // interface for quicksettings
-  function QSGui(label, parent, sketch) {
+  function QSGui(label, parent, sketch, userParams) {
 
     // hard code the position, it can be changed later
     let x = 20;
     let y = 20;
 
-    var qs = QuickSettings.create(x, y, label, parent);
+    var qs = QuickSettings.create(x, y, label, parent, userParams);
 
     // proxy all functions of quicksettings
     this.prototype = qs;

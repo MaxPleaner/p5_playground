@@ -51,8 +51,9 @@ UI_Manager = ->
             window.active_project = new Utils.P5Wrapper(project)
             active_project.start()
 
-          if active_project.processor?.HAS_GUI
+          if active_project.processor?.HAS_GUI || active_project.HAS_GUI
             $("#toggle-gui").show()
+            $toggle_gui.text("Hide GUI")
           else
             $("#toggle-gui").hide()
         buttons[name] = $button
@@ -71,7 +72,8 @@ UI_Manager = ->
 
     $toggle_gui = $("#toggle-gui")
     $toggle_gui.click (e) ->
-      active_project.processor.gui?.toggleVisibility()
+      gui = active_project.gui || active_project.processor.gui
+      gui?.toggleVisibility()
       if $toggle_gui.text() == "Show GUI"
         $toggle_gui.text("Hide GUI")
       else
