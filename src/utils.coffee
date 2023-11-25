@@ -10,6 +10,8 @@ module.exports = ->
 
   @P5Wrapper = require './utils/p5_wrapper'
   @Draggable = require("./utils/draggable")
+
+  @Noise = require './utils/noise'
   
   Object.assign(this, require('./utils/cpu_pixel_utils')(this))
   @PixelOps = require('./utils/cpu_pixel_operators')(this)
@@ -19,6 +21,20 @@ module.exports = ->
 
   # Mixing are designed as feature sets which can be easily added to a project.
   @Macros = require("./utils/macros")(this)
+
+  @webglNoSmooth = (img) ->
+    @_canvas.getTexture(img).setInterpolation(@NEAREST, @NEAREST);
+
+  # ===============
+  # GUI
+  # ===============
+  @addGui = (p5, params_object) ->
+    p5._gui = p5.createGui(p5)
+    p5._gui.addObject(params_object)
+    { top, right } = p5.canvas.getBoundingClientRect()
+    offset = p5._gui.content().getBoundingClientRect().width
+    p5._gui.setPosition(right - offset, top)
+    p5._gui
 
   # ===============
   # Macros

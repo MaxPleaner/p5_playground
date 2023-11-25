@@ -3,6 +3,7 @@
  */
 (function () {
 
+
   ////////////////////////////////////////////////////////////////////////////////
   // region PRIVATE GENERIC UTILS
   ////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +175,7 @@
        * Returns an object containing the titles and values of all user-interactive controls in this panel.
        * @param asString    {Boolean}    If true, returns a JSON formatted string of these values.
        * @returns        {Object}    An object or string containing the titles and values fo all user-interactive controls in this panel.
-       */
+       *
       getValuesAsJSON: function (asString) {
           var json = {};
           for (var title in this._controls) {
@@ -308,6 +309,9 @@
           this._content.style.height = (h - this._titleBar.offsetHeight) + "px";
           return this;
       },
+
+      panel: function() { return this._panel },
+      content: function() { return this._content },
 
       /**
        * Sets the width of the panel.
@@ -1233,7 +1237,8 @@
               }
           };
 
-          var eventName = "input";
+        //   var eventName = "input";
+          var eventName = "change";
           if (type === "range" && isIE()) {
               eventName = "change";
           }

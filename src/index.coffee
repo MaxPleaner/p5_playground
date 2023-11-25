@@ -4,7 +4,8 @@ window.$ = require('jquery')
 window._ = require('lodash')
 require './vendor/p5.gui/p5.gui.js'
 window.QuickSettings = require './vendor/p5.gui/quicksettings.js'
-# debugger
+window.chromotome = require 'chromotome'
+window.chroma = require 'chroma-js'
 
 # Custom deps
 window.Utils = require './utils.coffee'
@@ -23,9 +24,9 @@ UI_Manager = ->
       $categoryWrapper = $ "<div class='category-wrapper'></div>"
       $categoryWrapper.append $categorySelector
       $category = $("<ul class='category'></ul>")
-      $category.hide()
+      # $category.hide()
       $categorySelector.on "click", (e) ->
-        $(".category").hide()
+        # $(".category").hide()
         $category.show()
       $projects.append $categoryWrapper
       $categoryWrapper.append("<br />")
@@ -43,8 +44,17 @@ UI_Manager = ->
           active_button = $button
           active_button.addClass "active"
           active_project?.remove()
-          window.active_project = new Utils.P5Wrapper(project)
-          active_project.start()
+
+          if project.STANDALONE
+            window.active_project = project.start()
+          else
+            window.active_project = new Utils.P5Wrapper(project)
+            active_project.start()
+
+          if active_project.processor?.HAS_GUI
+            $("#toggle-gui").show()
+          else
+            $("#toggle-gui").hide()
         buttons[name] = $button
     
     $("#pause").click (e) ->
@@ -55,6 +65,20 @@ UI_Manager = ->
 
     $("#redraw").click (e) ->
       active_project?.redraw()
+
+    $("#save-image").click (e) ->
+      active_project.p5.saveCanvas("sketch", "png")
+
+    $toggle_gui = $("#toggle-gui")
+    $toggle_gui.click (e) ->
+      active_project.processor.gui?.toggleVisibility()
+      if $toggle_gui.text() == "Show GUI"
+        $toggle_gui.text("Hide GUI")
+      else
+        $toggle_gui.text("Show GUI")
+
+
+      # active_p  roject.gui?.
 
     category = Object.keys(Projects).find (category) ->
       Object.keys(Projects[category]).includes(Projects.DEFAULT_PROJECT_NAME)

@@ -138,11 +138,11 @@
 
     // noLoop() to call draw every time the gui changes when we are not looping
     this.noLoop = function() {
-      qs.setGlobalChangeHandler(sketch._draw);
+      qs.setGlobalChangeHandler && qs.setGlobalChangeHandler(sketch._draw);
     };
 
     this.loop = function() {
-      qs.setGlobalChangeHandler(null);
+      qs.setGlobalChangeHandler && qs.setGlobalChangeHandler(null);
     };
 
     // pass through ...
@@ -153,6 +153,11 @@
     this.setPosition  = function(x, y) {
       qs.setPosition(x, y);
       return this;
+    };
+    this.panel = function() { return qs.panel(); };
+    this.content = function() { return qs.content(); };
+    this.setChangeHandler = function(handler) {
+      qs.setGlobalChangeHandler(handler);
     };
 
     // Extend Quicksettings

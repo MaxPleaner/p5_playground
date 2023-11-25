@@ -8,7 +8,6 @@
     "build": "webpack",
     "start": "webpack serve --open",
     "push": "yarn build; git add -A; git commit; git push origin HEAD; git subtree push --prefix=dist origin gh-pages"
- 
   },
   "devDependencies": {
     "coffee-loader": "^4.0.0",
@@ -18,8 +17,12 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "chroma-js": "^2.4.2",
+    "chromotome": "^1.21.4",
     "jquery": "^3.7.1",
     "lodash": "^4.17.21",
-    "p5": "^1.8.0"
+    "p5": "^1.8.0",
+    "poisson-disk-sampling": "^2.3.1",
+    "simplex-noise": "^4.0.1"
   }
 }

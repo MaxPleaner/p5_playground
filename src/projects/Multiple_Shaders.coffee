@@ -4,6 +4,7 @@ module.exports = ->
   @WEBGL = true
   @DESCRIPTION = "Using two GLSL shaders in sequence to process an image. Sin Wave => Dithering => Pixelate. Thanks to https://github.com/aferriss/p5jsShaderExamples/blob/gh-pages/4_image-effects/4-10_two-pass-blur/sketch.js"
   @NO_SMOOTH = true
+  @HAS_GUI = true
 
   @params = {
     period: 100.0,
@@ -19,7 +20,6 @@ module.exports = ->
     ampMin: 0.0,
     ampMax: 0.1,
     ampStep: 0.001,
-
   }
 
   @preload = ->
@@ -28,8 +28,7 @@ module.exports = ->
   @setup = ->
     scale = 0.2
     @img.resize(@width * scale, @height * scale)
-    Project.gui = @createGui(this)
-    Project.gui.addObject(Project.params)
+    Project.gui = Utils.addGui this, Project.params
 
   @draw = ->
     console.log(Project.params.x)
