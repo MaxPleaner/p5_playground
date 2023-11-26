@@ -4,7 +4,8 @@ module.exports =
 
   # ===========================================================================
   # This is the project that will be run by default when you first open the page
-  DEFAULT_PROJECT_NAME: 'Trunk'
+  DEFAULT_PROJECT_NAME: 'Ten_Print'
+  # DEFAULT_PROJECT_NAME: 'Similar_Pixels_Sort'
   # DEFAULT_PROJECT_NAME: 'Multiple_Shaders'
   # ===========================================================================
 
@@ -22,3 +23,6 @@ module.exports =
     # Pixel_Sorting_1: require("./projects/Generated_Space_Pixel_Sorting_1")
     Similar_Pixels_Sort: require("./projects/Generated_Space_Pixel_Sorting")
     Trunk: require("./projects/Generated_Space_Trunk")
+    Watercolor: require("./projects/Generated_Space_Watercolor")
+    Ten_Print: require("./projects/Ten_Print")
+    Cube_Wave: require("./projects/Cube_Wave")

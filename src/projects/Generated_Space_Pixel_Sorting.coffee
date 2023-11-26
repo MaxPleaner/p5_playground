@@ -22,8 +22,9 @@ module.exports = ->
     @sketch = sketch(Project.PARAMS)
     Utils.applyMacro.call @sketch, @sketch,
       setup: ->
+        debugger
         Project.gui?.destroy()
-        Project.gui = Utils.addGui(this, Project.PARAMS)
+        Project.gui = Utils.addGui(this, Project.PARAMS, "Params", liveUpdate: false)
         Project.gui.setChangeHandler ->
           Project.redraw()
     Project

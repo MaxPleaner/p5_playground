@@ -28,8 +28,12 @@ module.exports = ->
   # ===============
   # GUI
   # ===============
-  @addGui = (p5, params_object) ->
-    p5._gui = p5.createGui(p5)
+  @addGui = (p5, params_object, config) ->
+    if config
+      p5._gui = p5.createGui(p5, "Params", config)
+    else
+      p5._gui = p5.createGui(p5)
+
     p5._gui.addObject(params_object)
     { top, right } = p5.canvas.getBoundingClientRect()
 

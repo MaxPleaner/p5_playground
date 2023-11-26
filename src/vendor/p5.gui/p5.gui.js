@@ -19,8 +19,7 @@
   // You only need to pass a reference to the sketch in instance mode
 
   // Usually you will call createGui(this, 'label');
-  p5.prototype.createGui = function(sketch, label, provider, { liveUpdate = true } = {}) {
-
+  p5.prototype.createGui = function(sketch, label, { liveUpdate = true } = {}) {
     // createGui(label) signature
     if ((typeof sketch) === 'string') {
       return this.createGui(label, sketch, provider);
@@ -44,7 +43,7 @@
     }
 
     // default gui provider
-    provider = provider || guiProvider;
+    provider = guiProvider;
 
     var gui;
 
