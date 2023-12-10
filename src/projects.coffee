@@ -4,7 +4,7 @@ module.exports =
 
   # ===========================================================================
   # This is the project that will be run by default when you first open the page
-  DEFAULT_PROJECT_NAME: 'Sound1'
+  DEFAULT_PROJECT_NAME: 'SoundAndCollision'
   # ===========================================================================
 
   FRAMEWORK_DEVELOPMENT:
@@ -26,5 +26,5 @@ module.exports =
     Ten_Print: require("./projects/Ten_Print")
     # Cube_Wave: require("./projects/Cube_Wave")
 
-  SOUND:
-    Sound1: require("./projects/Sound1")
+  SOUND_AND_COLLISION:
+    SoundAndCollision: require("./projects/Sound1")

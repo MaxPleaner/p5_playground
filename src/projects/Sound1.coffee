@@ -36,6 +36,16 @@ module.exports = ->
       max_noteMin: 0,
       max_noteMax: 400,
       max_noteStep: 1,
+
+      walk_speed: 2.0
+      walk_speedMin: 0.0
+      walk_speedMax: 50.0,
+      walk_speedStep: 0.01
+
+      walk_every_n_frames: 3,
+      walk_every_n_framesMin: 0,
+      walk_every_n_framesMax: 200,
+      walk_every_n_framesStep: 1
     }
 
     @seed_dot_positions = ->
@@ -108,11 +118,26 @@ module.exports = ->
       @synth = new p5.PolySynth()
       @userStartAudio()
 
+    @walk_dots = ->
+      return unless @frameCount % Project.params.walk_every_n_frames == 0
+      # apply random walk to each dot
+      for i in [0...Project.params.num_dots]
+        @dot_positions[i][0] += @random(-Project.params.walk_speed, Project.params.walk_speed)
+        @dot_positions[i][1] += @random(-Project.params.walk_speed, Project.params.walk_speed)
+
+        # wrap around screen
+        @dot_positions[i][0] = -@width / 2 if @dot_positions[i][0] > @width / 2
+        @dot_positions[i][0] = @width / 2 if @dot_positions[i][0] < -@width / 2
+        @dot_positions[i][1] = -@height / 2 if @dot_positions[i][1] > @height / 2
+        @dot_positions[i][1] = @height / 2 if @dot_positions[i][1] < -@height / 2
+
     @draw = ->
       @background(0)
-      if Project.params.seed != @seed
-        @seed = @randomSeed(Project.params.seed)
+      if Project.params.seed != @seed || Project.params.num_dots != @dot_positions.length
+        @randomSeed(Project.params.seed)
+        @seed = Project.params.seed
         Project.seed_dot_positions.call(this)
+      Project.walk_dots.call(this)
       Project.add_dots.call(this)
       Project.add_line.call(this)
       collisions = Project.findCollision.call(this)
