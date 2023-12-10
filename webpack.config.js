@@ -7,9 +7,12 @@ module.exports = {
     rules: [
       {
         test: /\.coffee$/,
-        use: ['coffee-loader'],
+        use: [
+          'coffee-loader'
+        ],
       },
     ],
+    
   },
   resolve: {
     extensions: ['.coffee', '.js'],

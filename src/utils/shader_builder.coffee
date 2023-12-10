@@ -23,8 +23,8 @@ default_frag_frontmatter = """
       }
 """
 
-module.exports = ({vert = default_vert, frag, setup, setUniforms, preload}) ->
-  frag = default_frag_frontmatter + frag
+module.exports = ({vert = default_vert, frag_frontmatter = default_frag_frontmatter, frag, setup, setUniforms, preload}) ->
+  frag = frag_frontmatter + frag
 
   shaderSetup = setup || ->
   shaderSetUniforms = setUniforms || ->
