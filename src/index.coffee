@@ -24,9 +24,9 @@ UI_Manager = ->
       $categoryWrapper = $ "<div class='category-wrapper'></div>"
       $categoryWrapper.append $categorySelector
       $category = $("<ul class='category'></ul>")
-      # $category.hide()
+      $category.hide()
       $categorySelector.on "click", (e) ->
-        # $(".category").hide()
+        $(".category").hide()
         $category.show()
       $projects.append $categoryWrapper
       $categoryWrapper.append("<br />")

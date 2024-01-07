@@ -87,7 +87,7 @@ module.exports = ->
       @line(-@width / 2, @line_y, @width / 2, @line_y)
       @line_y += @line_dir * Project.params.line_speed
 
-    @findCollision = ->
+    @findCollisions = ->
       collisions = []
       for dot in @dot_positions
         collision = @collideLineCircle(
@@ -140,7 +140,7 @@ module.exports = ->
       Project.walk_dots.call(this)
       Project.add_dots.call(this)
       Project.add_line.call(this)
-      collisions = Project.findCollision.call(this)
+      collisions = Project.findCollisions.call(this)
       Project.playSounds.call(this, collisions)
       unless @synth
         @textSize(32)
