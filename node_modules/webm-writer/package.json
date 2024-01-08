@@ -1,0 +1,25 @@
+{
+  "name": "webm-writer",
+  "version": "1.0.0",
+  "description": "Render WebM videos from Canvas frames",
+  "main": "main.js",
+  "browser": "browser.js",
+  "scripts": {
+    "test": "electron-mocha --renderer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thenickdude/webm-writer-js.git"
+  },
+  "author": "Nicholas Sherlock",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/thenickdude/webm-writer-js/issues"
+  },
+  "homepage": "https://github.com/thenickdude/webm-writer-js#readme",
+  "devDependencies": {
+    "electron": "^15.2.0",
+    "electron-mocha": "^10.1.0",
+    "mocha": "^9.1.3"
+  }
+}

@@ -4,7 +4,7 @@ module.exports =
 
   # ===========================================================================
   # This is the project that will be run by default when you first open the page
-  DEFAULT_PROJECT_NAME: 'Drawing2'
+  DEFAULT_PROJECT_NAME: 'Messy_Wires'
   # ===========================================================================
 
   FRAMEWORK_DEVELOPMENT:
@@ -27,9 +27,11 @@ module.exports =
     # Cube_Wave: require("./projects/Cube_Wave")
 
   SOUND_AND_COLLISION:
-    SoundAndCollision: require("./projects/Sound1")
-    Sound2_Pendulum: require("./projects/Sound2_Pendulum")
+    Collision_Points: require("./projects/Sound1")
+    Pendulum_Boundaries: require("./projects/Sound2_Pendulum")
 
   DRAWING:
-    Drawing1: require("./projects/Drawing1")
-    Drawing2: require("./projects/Drawing2")
+    Rotating_Circles: require("./projects/Drawing1")
+    Expanding_Circle: require("./projects/Drawing2")
+    Blood_Worms_Noise: require("./projects/Drawing3")
+    Messy_Wires: require("./projects/Drawing4")

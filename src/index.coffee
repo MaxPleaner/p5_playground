@@ -7,6 +7,8 @@ window.QuickSettings = require './vendor/p5.gui/quicksettings.js'
 window.chromotome = require 'chromotome'
 window.chroma = require 'chroma-js'
 
+window.P5Capture = require 'p5.capture'
+
 # Custom deps
 window.Utils = require './utils.coffee'
 window.Projects = require './projects'
@@ -51,6 +53,8 @@ UI_Manager = ->
             window.active_project = new Utils.P5Wrapper(project)
             active_project.start()
 
+          $(".p5c-container").hide()
+
           if active_project.processor?.HAS_GUI || active_project.HAS_GUI
             $("#toggle-gui").show()
             $toggle_gui.text("Hide GUI")
@@ -60,6 +64,13 @@ UI_Manager = ->
     
     $("#pause").click (e) ->
       active_project?.pause()
+
+    $("#recorder").click (e) ->
+      $container = $(".p5c-container")
+      if ($container.is(":visible"))
+        $container.hide()
+      else
+        $container.show()
 
     $("#resume").click (e) ->
       active_project?.resume()
