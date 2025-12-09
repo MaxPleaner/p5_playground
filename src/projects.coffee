@@ -20,7 +20,7 @@ module.exports =
   
   CLONES:
     # Pixel_Sorting_1: require("./projects/Generated_Space_Pixel_Sorting_1")
-    Similar_Pixels_Sort: require("./projects/Generated_Space_Pixel_Sorting")
+    # Similar_Pixels_Sort: require("./projects/Generated_Space_Pixel_Sorting")
     Trunk: require("./projects/Generated_Space_Trunk")
     Watercolor: require("./projects/Generated_Space_Watercolor")
     Ten_Print: require("./projects/Ten_Print")
