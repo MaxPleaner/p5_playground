@@ -1,5 +1,6 @@
 button.active {
-  outline: 3px solid green;
+  background-color: #2d5016;
+  border-color: #4a8020;
 }
 
 #projects {
@@ -7,19 +8,82 @@ button.active {
   margin-left: 5px;
 }
 
-#projects button {
+/* Category bar - horizontal navigation */
+.category-bar {
+  background-color: #0a0a0a;
+  border: 2px solid #3a3a3a;
+  border-left: 4px solid #4a8020;
+  padding: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Category selector buttons */
+.category-selector {
+  background-color: #1a1a1a;
+  border: 2px solid #3a3a3a;
+  padding: 8px 20px;
+  font-weight: bold;
+  color: #90EE90;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.5px;
+}
+
+.category-selector:hover {
+  background-color: #252525;
+  border-color: #4a8020;
+  box-shadow: 0 0 12px rgba(74, 128, 32, 0.3);
+}
+
+.category-selector.active {
+  background-color: #2d5016;
+  border-color: #5a9030;
+  box-shadow: 0 0 16px rgba(90, 144, 48, 0.4);
+}
+
+/* Projects container */
+.projects-container {
+  background-color: #0a0a0a;
+  border: 2px solid #3a3a3a;
+  border-left: 4px solid #4a8020;
+  padding: 15px;
+  min-height: 100px;
+}
+
+/* Category lists */
+.category {
+  margin: 0;
+  padding: 0;
+}
+
+/* Project buttons */
+#projects .project button {
   width: 250px;
   margin: 3px;
-  border-radius: 10px;
-  padding: 5px;
+  padding: 8px 12px;
+  background-color: #1a1a1a;
+  border: 2px solid #3a3a3a;
+  border-left: 3px solid #3a3a3a;
+  color: #90EE90;
+  font-weight: 500;
+  transition: all 0.15s ease;
 }
 
-#projects button:hover {
+#projects .project button:hover {
   cursor: pointer;
+  background-color: #252525;
+  border-color: #4a8020;
+  border-left-color: #5a9030;
+  transform: translateX(3px);
 }
 
-#projects button:not(.active):hover {
-  outline: 1px solid lightgreen;
+#projects .project button:not(.active):hover {
+  box-shadow: 0 0 8px rgba(144, 238, 144, 0.2);
 }
 
 body {
@@ -41,9 +105,29 @@ body {
 }
 
 
+/* Control buttons (pause, resume, etc.) */
 button {
   font-family: inherit;
   font-size: 1em;
+  background-color: #1a1a1a;
+  border: 2px solid #3a3a3a;
+  color: #90EE90;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-right: 5px;
+}
+
+button:hover {
+  background-color: #252525;
+  border-color: #4a8020;
+  box-shadow: 0 2px 6px rgba(144, 238, 144, 0.15);
+}
+
+button:active {
+  background-color: #2d5016;
+  transform: scale(0.98);
 }
 
 a, a:visited {

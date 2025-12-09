@@ -20,19 +20,28 @@ UI_Manager = ->
   buttons = {}
   $ ->
     $projects = $ "#projects"
+    $categoryBar = $("<div class='category-bar'></div>")
+    $projectsContainer = $("<div class='projects-container'></div>")
+    $projects.append($categoryBar)
+    $projects.append($projectsContainer)
+
+    categories = {}
     Object.entries(Projects).forEach ([category, projects]) ->
       return if category == "DEFAULT_PROJECT_NAME"
       $categorySelector = $("<button class='category-selector'>#{category}</button>").data("name", category)
-      $categoryWrapper = $ "<div class='category-wrapper'></div>"
-      $categoryWrapper.append $categorySelector
       $category = $("<ul class='category'></ul>")
       $category.hide()
+      categories[category] = $category
+
       $categorySelector.on "click", (e) ->
+        $(".category-selector").removeClass("active")
+        $categorySelector.addClass("active")
         $(".category").hide()
         $category.show()
-      $projects.append $categoryWrapper
-      $categoryWrapper.append("<br />")
-      $categoryWrapper.append $category
+
+      $categoryBar.append($categorySelector)
+      $projectsContainer.append($category)
+
       Object.entries(projects).forEach ([name, project]) ->
         $project = $ "<li class='project'></li>"
         $category.append $project
